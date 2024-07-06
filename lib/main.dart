@@ -1,11 +1,18 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:packt_flutter/providers/FortuneModel.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
-  runApp(const MyApp());
+  runApp(ChangeNotifierProvider(
+      create: (context) =>
+        Fortunemodel(),
+      child: const MyApp()
+    )
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -60,7 +67,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   List<String> fortunes = [
-    "You shall be health",
+    "You shall be healt",
     "You shall prosper beyond measure.",
     "Be careful that you do not abandon your fathers house for all the days of your life "
 
@@ -113,6 +120,8 @@ class _MyHomePageState extends State<MyHomePage> {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
+
+    final fortune = Provider.of<Fortunemodel>(context);
     return Scaffold(
       appBar: AppBar(
         // TRY THIS: Try changing the color here to a specific color (to
@@ -147,12 +156,12 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                    '${_currentFortune} ',
+                    fortune.currentFortune,
                      style: Theme.of(context).textTheme.titleMedium,
                 ),
               )
             ),
-            ElevatedButton(onPressed: _randomFortune, child: Text('Get a fortune'))
+            ElevatedButton(onPressed: fortune.getRandomFortune, child: Text('Get a fortune'))
             // ElevatedButton(onPressed: () {
             //   Fluttertoast.showToast(msg: "Sign in Complete!",
             //                           backgroundColor: Colors.greenAccent);
